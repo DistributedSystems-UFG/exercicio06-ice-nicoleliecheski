@@ -20,6 +20,20 @@ public class Client {
             String response = printer.printString("Hello from Goiania!");
             System.out.println("Server responded: " + response);
 
+            printer.printInt(42);
+
+            String reversed = printer.reverseString("Hello from Goiania!");
+            System.out.println("Reversed: " + reversed);
+
+            ObjectPrx base2 = communicator.stringToProxy("SimpleCalculator:default -h 98.90.53.6 -p 5678");
+            Demo.CalculatorPrx calculator = Demo.CalculatorPrx.checkedCast(base2);
+            if (calculator == null) {
+                throw new Error("Invalid proxy");
+            }
+
+            System.out.println("10 + 5 = " + calculator.add(10, 5));
+            System.out.println("10 - 5 = " + calculator.subtract(10, 5));
+
         } catch (LocalException e) {
             e.printStackTrace();
         }
